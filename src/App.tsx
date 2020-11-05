@@ -1,7 +1,14 @@
 import React from 'react';
+import RootLayout from "./layouts/RootLayout";
+import ErrorBoundary from "./layouts/ErrorBoundary";
 
 function App() {
-  return <h1>Hello World!</h1>
+
+    return (
+        <ErrorBoundary>
+            <RootLayout/>
+        </ErrorBoundary>
+    );
 }
 
 export default App;
