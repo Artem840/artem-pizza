@@ -4,13 +4,15 @@ import OrderPage from "../pages/OrderPage/OrderPage";
 import calculateOrder from "../utils/calculateOrder";
 import {Order, PizzaDough, PizzaSize, PizzaSouse} from "../types/types";
 
+const initialOrder = {
+    size: PizzaSize.SMALL,
+    dough: PizzaDough.THIN,
+    souse: PizzaSouse.TOMATO,
+    additional: []
+}
+
 const RootLayout:FunctionComponent = () => {
-    const [order, setOrder] = useState<Order>({
-        size: PizzaSize.SMALL,
-        dough: PizzaDough.THIN,
-        souse: PizzaSouse.TOMATO,
-        additional: []
-    });
+    const [order, setOrder] = useState<Order>(initialOrder);
     const [showPayment, setShowPayment] = useState<boolean>(false);
 
     const handleAdditional = (input: HTMLInputElement): void => {
@@ -34,6 +36,13 @@ const RootLayout:FunctionComponent = () => {
         }))
     }
 
+    const togglePage = () => {
+        setShowPayment(!showPayment)
+        if (showPayment) {
+            setOrder(initialOrder)
+        }
+    }
+
     return (
         <div style={{ minHeight: '100vh', backgroundColor: 'cornflowerblue', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <div style={{ width: '100%', maxWidth: 360, padding: '20px', backgroundColor: '#fff' }}>
@@ -43,7 +52,7 @@ const RootLayout:FunctionComponent = () => {
                     <OrderPage order={order} handleAdditional={handleAdditional} handleOrder={handleOrder}/>
                 )}
 
-                <button onClick={() => setShowPayment(!showPayment)}>
+                <button onClick={togglePage}>
                     {showPayment ?
                         'Оплатить ' :
                         'Заказать за '}
